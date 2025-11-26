@@ -21,6 +21,8 @@ import BudgetManager from './components/BudgetManager';
 import Settings from './components/Settings';
 import FinancialTools from './components/FinancialTools';
 import BottomNavigation from './components/BottomNavigation';
+import BottomNavigationExpert from './components/BottomNavigationExpert';
+import UserTypeSelection from './components/UserTypeSelection';
 import Login from './components/Login';
 import Register from './components/Register';
 import ForgotPassword from './components/ForgotPassword';
@@ -33,6 +35,8 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CreatePost from './components/CreatePost';
 import ThreadDetail from './components/ThreadDetail';
+import ExpertHome from './components/ExpertHome';
+import ExpertProfile from './components/ExpertProfile';
 import ExpertDashboard from './components/ExpertDashboard';
 import ExpertClients from './components/ExpertClients';
 import ExpertSchedule from './components/ExpertSchedule';
@@ -40,6 +44,7 @@ import ExpertEarnings from './components/ExpertEarnings';
 import { Goal } from './types';
 
 type Screen =
+  | 'userTypeSelection' // Chọn loại người dùng
   | 'login' // Đăng nhập
   | 'register' // Đăng ký
   | 'forgotPassword' // Quên mật khẩu
@@ -73,10 +78,13 @@ type Screen =
   | 'contactSupport' // Liên hệ hỗ trợ
   | 'termsOfService' // Điều khoản dịch vụ
   | 'privacyPolicy' // Chính sách bảo mật
+  | 'expertHome' // Trang chủ chuyên gia
+  | 'expertProfile' // Hồ sơ chuyên gia
   | 'expertDashboard' // Dashboard chuyên gia
   | 'expertClients' // Quản lý khách hàng
   | 'expertSchedule' // Lịch tư vấn
-  | 'expertEarnings'; // Thu nhập & Hoa hồng
+  | 'expertEarnings' // Thu nhập tổng
+  | 'expertMonthlyEarnings'; // Thu nhập tháng
 
 interface AnalysisData {
   monthlyIncome: number;
@@ -94,8 +102,9 @@ interface AnalysisData {
 }
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('login');
+  const [currentScreen, setCurrentScreen] = useState<Screen>('userTypeSelection');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userType, setUserType] = useState<'customer' | 'expert'>('customer');
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [monthlySavings, setMonthlySavings] = useState(0);
   const [bookingData, setBookingData] = useState<{ expertName: string; date: string; time: string } | null>(null);
@@ -114,22 +123,33 @@ export default function App() {
 
   const handleLogin = (email: string, password: string) => {
     // Mock login - trong thực tế sẽ gọi API
-    console.log('Login:', email, password);
+    console.log('Login:', email, password, 'userType:', userType);
     setIsAuthenticated(true);
-    setCurrentScreen('home');
+    // Navigate to correct home based on user type
+    if (userType === 'expert') {
+      setCurrentScreen('expertHome');
+    } else {
+      setCurrentScreen('home');
+    }
   };
 
   const handleRegister = (name: string, email: string, password: string, phone: string) => {
     // Mock register - trong thực tế sẽ gọi API
-    console.log('Register:', name, email, password, phone);
+    console.log('Register:', name, email, password, phone, 'userType:', userType);
     setIsAuthenticated(true);
     setCurrentScreen('welcome');
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setCurrentScreen('login');
+    setUserType('customer');
+    setCurrentScreen('userTypeSelection');
     setCurrentGoal(null);
+  };
+
+  const handleSelectUserType = (type: 'customer' | 'expert') => {
+    setUserType(type);
+    setCurrentScreen('login');
   };
 
   const handleAnalysisComplete = (data: AnalysisData) => {
@@ -201,11 +221,19 @@ export default function App() {
       <div className="w-full max-w-[393px] min-h-[852px] bg-background shadow-2xl overflow-hidden flex flex-col relative">
         {/* Content - scrollable */}
         <div className="flex-1 overflow-y-auto bg-white pb-16">
+          {currentScreen === 'userTypeSelection' && (
+            <UserTypeSelection
+              onSelectUserType={handleSelectUserType}
+            />
+          )}
+
           {currentScreen === 'login' && (
             <Login
               onLogin={handleLogin}
               onRegister={() => setCurrentScreen('register')}
               onForgotPassword={() => setCurrentScreen('forgotPassword')}
+              userType={userType}
+              onBack={() => setCurrentScreen('userTypeSelection')}
             />
           )}
 
@@ -213,6 +241,8 @@ export default function App() {
             <Register
               onRegister={handleRegister}
               onLogin={() => setCurrentScreen('login')}
+              userType={userType}
+              onBack={() => setCurrentScreen('userTypeSelection')}
             />
           )}
 
@@ -224,7 +254,14 @@ export default function App() {
 
           {currentScreen === 'welcome' && (
             <Welcome
-              onComplete={() => setCurrentScreen('home')}
+              onComplete={() => {
+                // Navigate to correct home based on user type
+                if (userType === 'expert') {
+                  setCurrentScreen('expertDashboard');
+                } else {
+                  setCurrentScreen('home');
+                }
+              }}
               userName="Bạn"
             />
           )}
@@ -253,7 +290,8 @@ export default function App() {
                   onBudget={() => setCurrentScreen('budget')}
                   onTools={() => setCurrentScreen('tools')}
                   onSettings={() => setCurrentScreen('settings')}
-                  onExpertDashboard={() => setCurrentScreen('expertDashboard')}
+                  onExpertDashboard={userType === 'expert' ? () => setCurrentScreen('expertDashboard') : undefined}
+                  userType={userType}
                 />
               )}
 
@@ -473,6 +511,24 @@ export default function App() {
                 <PrivacyPolicy onBack={() => setCurrentScreen('settings')} />
               )}
 
+              {currentScreen === 'expertHome' && (
+                <ExpertHome 
+                  onViewTotalEarnings={() => setCurrentScreen('expertEarnings')}
+                  onViewMonthlyEarnings={() => setCurrentScreen('expertMonthlyEarnings')}
+                  onViewClients={() => setCurrentScreen('expertClients')}
+                  onViewSessions={() => setCurrentScreen('expertSchedule')}
+                  onViewProfile={() => setCurrentScreen('expertProfile')}
+                />
+              )}
+
+              {currentScreen === 'expertProfile' && (
+                <ExpertProfile 
+                  onBack={() => setCurrentScreen('expertHome')}
+                  onSettings={() => setCurrentScreen('settings')}
+                  onLogout={handleLogout}
+                />
+              )}
+
               {currentScreen === 'expertDashboard' && (
                 <ExpertDashboard 
                   onBack={() => setCurrentScreen('home')}
@@ -509,10 +565,19 @@ export default function App() {
         
         {/* Bottom Navigation - Only show when authenticated */}
         {isAuthenticated && (
-          <BottomNavigation
-            currentScreen={currentScreen}
-            setCurrentScreen={setCurrentScreen}
-          />
+          <>
+            {userType === 'expert' ? (
+              <BottomNavigationExpert
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen as any}
+              />
+            ) : (
+              <BottomNavigation
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            )}
+          </>
         )}
       </div>
     </div>

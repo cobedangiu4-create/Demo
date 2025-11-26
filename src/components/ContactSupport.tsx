@@ -32,7 +32,7 @@ export default function ContactSupport({ onBack }: ContactSupportProps) {
     {
       icon: Mail,
       title: 'Email',
-      value: 'support@financeplanner.vn',
+      value: 'support@monevo.vn',
       description: 'Phản hồi trong 24h',
       color: 'from-blue-500 to-cyan-500',
     },

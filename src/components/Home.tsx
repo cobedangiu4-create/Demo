@@ -57,6 +57,7 @@ interface HomeProps {
   onTools: () => void;
   onSettings: () => void;
   onExpertDashboard?: () => void;
+  userType?: 'customer' | 'expert';
 }
 
 export default function Home({
@@ -81,6 +82,7 @@ export default function Home({
   onTools,
   onSettings,
   onExpertDashboard,
+  userType = 'customer',
 }: HomeProps) {
   const [greeting, setGreeting] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());

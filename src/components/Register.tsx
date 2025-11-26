@@ -4,14 +4,16 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
-import { TrendingUp, Mail, Lock, User, Eye, EyeOff, Phone } from 'lucide-react';
+import { TrendingUp, Mail, Lock, User, Eye, EyeOff, Phone, Users, Award } from 'lucide-react';
 
 interface RegisterProps {
   onRegister: (name: string, email: string, password: string, phone: string) => void;
   onLogin: () => void;
+  userType: 'customer' | 'expert';
+  onBack?: () => void;
 }
 
-export default function Register({ onRegister, onLogin }: RegisterProps) {
+export default function Register({ onRegister, onLogin, userType, onBack }: RegisterProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -21,6 +23,8 @@ export default function Register({ onRegister, onLogin }: RegisterProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
+
+  const isExpert = userType === 'expert';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,11 +67,27 @@ export default function Register({ onRegister, onLogin }: RegisterProps) {
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#009689] to-[#00a896] rounded-3xl mb-4 shadow-2xl">
-            <TrendingUp className="w-10 h-10 text-white" />
+          <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${
+            isExpert ? 'from-purple-500 to-purple-600' : 'from-[#009689] to-[#00a896]'
+          } rounded-3xl mb-4 shadow-2xl`}>
+            {isExpert ? (
+              <Award className="w-10 h-10 text-white" />
+            ) : (
+              <TrendingUp className="w-10 h-10 text-white" />
+            )}
           </div>
           <h1 className="text-3xl text-gray-900 mb-2">Tạo tài khoản mới</h1>
-          <p className="text-gray-600">Bắt đầu hành trình quản lý tài chính</p>
+          <p className="text-gray-600">
+            Đăng ký {isExpert ? 'Chuyên gia' : 'Khách hàng'}
+          </p>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="mt-2 text-sm text-gray-500 hover:text-gray-700 underline"
+            >
+              ← Chọn loại tài khoản khác
+            </button>
+          )}
         </div>
 
         {/* Register Form */}

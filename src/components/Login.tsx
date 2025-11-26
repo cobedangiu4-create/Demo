@@ -3,19 +3,23 @@ import { Card, CardContent } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
-import { TrendingUp, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { TrendingUp, Mail, Lock, Eye, EyeOff, Award } from 'lucide-react';
 
 interface LoginProps {
   onLogin: (email: string, password: string) => void;
   onRegister: () => void;
   onForgotPassword?: () => void;
+  userType: 'customer' | 'expert';
+  onBack?: () => void;
 }
 
-export default function Login({ onLogin, onRegister, onForgotPassword }: LoginProps) {
+export default function Login({ onLogin, onRegister, onForgotPassword, userType, onBack }: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
+  const isExpert = userType === 'expert';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +47,27 @@ export default function Login({ onLogin, onRegister, onForgotPassword }: LoginPr
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#009689] to-[#00a896] rounded-3xl mb-4 shadow-2xl">
-            <TrendingUp className="w-10 h-10 text-white" />
+          <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${
+            isExpert ? 'from-purple-500 to-purple-600' : 'from-[#009689] to-[#00a896]'
+          } rounded-3xl mb-4 shadow-2xl`}>
+            {isExpert ? (
+              <Award className="w-10 h-10 text-white" />
+            ) : (
+              <TrendingUp className="w-10 h-10 text-white" />
+            )}
           </div>
           <h1 className="text-3xl text-gray-900 mb-2">Chào mừng trở lại</h1>
-          <p className="text-gray-600">Đăng nhập để tiếp tục quản lý tài chính</p>
+          <p className="text-gray-600">
+            Đăng nhập {isExpert ? 'Chuyên gia' : 'Khách hàng'}
+          </p>
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="mt-2 text-sm text-gray-500 hover:text-gray-700 underline"
+            >
+              ← Chọn loại tài khoản khác
+            </button>
+          )}
         </div>
 
         {/* Login Form */}
@@ -153,7 +173,7 @@ export default function Login({ onLogin, onRegister, onForgotPassword }: LoginPr
               Dùng thử nhanh với tài khoản demo
             </p>
             <div className="text-xs text-yellow-700 space-y-1">
-              <p>Email: demo@financeplanner.com</p>
+              <p>Email: demo@monevo.com</p>
               <p>Mật khẩu: demo123</p>
             </div>
           </CardContent>

@@ -209,7 +209,7 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
                   <li><strong>Rút lại đồng ý:</strong> Bất kỳ lúc nào</li>
                 </ul>
                 <p className="leading-relaxed mt-3">
-                  Để thực hiện các quyền này, vui lòng liên hệ: privacy@financeplanner.vn
+                  Để thực hiện các quyền này, vui lòng liên hệ: privacy@monevo.vn
                 </p>
               </div>
             </section>
@@ -254,7 +254,7 @@ export default function PrivacyPolicy({ onBack }: PrivacyPolicyProps) {
               </p>
               <div className="bg-primary/5 rounded-lg p-4 space-y-2 text-sm">
                 <p><strong>Bộ phận Bảo vệ Dữ liệu</strong></p>
-                <p>📧 Email: privacy@financeplanner.vn</p>
+                <p>📧 Email: privacy@monevo.vn</p>
                 <p>📞 Hotline: 1900 xxxx (ext. 2)</p>
                 <p>📍 Địa chỉ: Tầng 10, Tòa nhà ABC, 123 Phố Huế, Hà Nội</p>
               </div>

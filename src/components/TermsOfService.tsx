@@ -164,7 +164,7 @@ export default function TermsOfService({ onBack }: TermsOfServiceProps) {
                 Nếu bạn có câu hỏi về các điều khoản này, vui lòng liên hệ:
               </p>
               <div className="mt-2 space-y-1 text-sm">
-                <p>📧 Email: support@financeplanner.vn</p>
+                <p>📧 Email: support@monevo.vn</p>
                 <p>📞 Hotline: 1900 xxxx</p>
                 <p>📍 Địa chỉ: Tầng 10, Tòa nhà ABC, 123 Phố Huế, Hà Nội</p>
               </div>

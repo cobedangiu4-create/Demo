@@ -215,7 +215,7 @@ export default function Settings({
         {
           icon: Mail,
           label: 'Liên hệ hỗ trợ',
-          description: 'support@financeplanner.vn',
+          description: 'support@monevo.vn',
           action: onContactSupport,
           type: 'navigate',
         },

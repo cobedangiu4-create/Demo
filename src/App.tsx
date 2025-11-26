@@ -33,6 +33,10 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CreatePost from './components/CreatePost';
 import ThreadDetail from './components/ThreadDetail';
+import ExpertDashboard from './components/ExpertDashboard';
+import ExpertClients from './components/ExpertClients';
+import ExpertSchedule from './components/ExpertSchedule';
+import ExpertEarnings from './components/ExpertEarnings';
 import { Goal } from './types';
 
 type Screen =
@@ -68,7 +72,11 @@ type Screen =
   | 'helpCenter' // Trung tâm trợ giúp
   | 'contactSupport' // Liên hệ hỗ trợ
   | 'termsOfService' // Điều khoản dịch vụ
-  | 'privacyPolicy'; // Chính sách bảo mật
+  | 'privacyPolicy' // Chính sách bảo mật
+  | 'expertDashboard' // Dashboard chuyên gia
+  | 'expertClients' // Quản lý khách hàng
+  | 'expertSchedule' // Lịch tư vấn
+  | 'expertEarnings'; // Thu nhập & Hoa hồng
 
 interface AnalysisData {
   monthlyIncome: number;
@@ -245,6 +253,7 @@ export default function App() {
                   onBudget={() => setCurrentScreen('budget')}
                   onTools={() => setCurrentScreen('tools')}
                   onSettings={() => setCurrentScreen('settings')}
+                  onExpertDashboard={() => setCurrentScreen('expertDashboard')}
                 />
               )}
 
@@ -462,6 +471,37 @@ export default function App() {
 
               {currentScreen === 'privacyPolicy' && (
                 <PrivacyPolicy onBack={() => setCurrentScreen('settings')} />
+              )}
+
+              {currentScreen === 'expertDashboard' && (
+                <ExpertDashboard 
+                  onBack={() => setCurrentScreen('home')}
+                  onViewClients={() => setCurrentScreen('expertClients')}
+                  onViewSchedule={() => setCurrentScreen('expertSchedule')}
+                  onViewEarnings={() => setCurrentScreen('expertEarnings')}
+                  onViewProfile={() => setCurrentScreen('profile')}
+                />
+              )}
+
+              {currentScreen === 'expertClients' && (
+                <ExpertClients 
+                  onBack={() => setCurrentScreen('expertDashboard')}
+                  onViewClient={(clientId) => {
+                    console.log('View client:', clientId);
+                  }}
+                />
+              )}
+
+              {currentScreen === 'expertSchedule' && (
+                <ExpertSchedule 
+                  onBack={() => setCurrentScreen('expertDashboard')}
+                />
+              )}
+
+              {currentScreen === 'expertEarnings' && (
+                <ExpertEarnings 
+                  onBack={() => setCurrentScreen('expertDashboard')}
+                />
               )}
             </>
           )}

@@ -56,6 +56,7 @@ interface HomeProps {
   onBudget: () => void;
   onTools: () => void;
   onSettings: () => void;
+  onExpertDashboard?: () => void;
 }
 
 export default function Home({
@@ -79,6 +80,7 @@ export default function Home({
   onBudget,
   onTools,
   onSettings,
+  onExpertDashboard,
 }: HomeProps) {
   const [greeting, setGreeting] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -552,6 +554,31 @@ export default function Home({
             Tư vấn
           </Button>
         </div>
+
+        {/* Expert Mode Access */}
+        {onExpertDashboard && (
+          <Card className="border-0 shadow-lg overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 mb-4">
+            <button
+              onClick={onExpertDashboard}
+              className="w-full text-left group"
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Award className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-white text-sm mb-1">Chế độ Chuyên Gia</h4>
+                      <p className="text-white/70 text-xs">Quản lý khách hàng & thu nhập</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-white group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </button>
+          </Card>
+        )}
       </div>
     </div>
   );

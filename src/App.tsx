@@ -216,369 +216,387 @@ export default function App() {
       };
 
   return (
-    <div className="min-h-screen bg-[#f0fdfa] flex items-center justify-center p-4">
-      {/* iPhone 16 container */}
-      <div className="w-full max-w-[393px] min-h-[852px] bg-background shadow-2xl overflow-hidden flex flex-col relative">
-        {/* Content - scrollable */}
-        <div className="flex-1 overflow-y-auto bg-white pb-16">
-          {currentScreen === 'userTypeSelection' && (
-            <UserTypeSelection
-              onSelectUserType={handleSelectUserType}
-            />
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-8">
+      {/* iPhone 16 Pro Max - Realistic Phone Mockup */}
+      <div className="relative">
+        {/* Phone Frame */}
+        <div className="relative w-[430px] h-[932px] bg-gradient-to-br from-[#2c2c2e] to-[#1c1c1e] rounded-[60px] shadow-2xl p-[12px]">
+          
+          {/* Physical Buttons */}
+          <div className="absolute left-[-4px] top-[180px] w-[4px] h-[32px] bg-gradient-to-r from-[#1c1c1e] to-[#2c2c2e] rounded-l-lg shadow-inner" />
+          <div className="absolute left-[-4px] top-[230px] w-[4px] h-[56px] bg-gradient-to-r from-[#1c1c1e] to-[#2c2c2e] rounded-l-lg shadow-inner" />
+          <div className="absolute left-[-4px] top-[300px] w-[4px] h-[56px] bg-gradient-to-r from-[#1c1c1e] to-[#2c2c2e] rounded-l-lg shadow-inner" />
+          <div className="absolute right-[-4px] top-[220px] w-[4px] h-[80px] bg-gradient-to-l from-[#1c1c1e] to-[#2c2c2e] rounded-r-lg shadow-inner" />
+          
+          {/* Inner Screen Bezel */}
+          <div className="relative w-full h-full bg-black rounded-[50px] overflow-hidden shadow-inner">
+            
+            {/* Dynamic Island */}
+            <div className="absolute top-[14px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[20px] z-[60] border border-gray-900" />
+            
+            {/* Screen Content Container - This is the actual "screen" */}
+            <div className="relative w-full h-full bg-white overflow-hidden flex flex-col">
+              
+              {/* Content Area - Scrollable */}
+              <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20">
+                {currentScreen === 'userTypeSelection' && (
+                  <UserTypeSelection
+                    onSelectUserType={handleSelectUserType}
+                  />
+                )}
 
-          {currentScreen === 'login' && (
-            <Login
-              onLogin={handleLogin}
-              onRegister={() => setCurrentScreen('register')}
-              onForgotPassword={() => setCurrentScreen('forgotPassword')}
-              userType={userType}
-              onBack={() => setCurrentScreen('userTypeSelection')}
-            />
-          )}
+                {currentScreen === 'login' && (
+                  <Login
+                    onLogin={handleLogin}
+                    onRegister={() => setCurrentScreen('register')}
+                    onForgotPassword={() => setCurrentScreen('forgotPassword')}
+                    userType={userType}
+                    onBack={() => setCurrentScreen('userTypeSelection')}
+                  />
+                )}
 
-          {currentScreen === 'register' && (
-            <Register
-              onRegister={handleRegister}
-              onLogin={() => setCurrentScreen('login')}
-              userType={userType}
-              onBack={() => setCurrentScreen('userTypeSelection')}
-            />
-          )}
+                {currentScreen === 'register' && (
+                  <Register
+                    onRegister={handleRegister}
+                    onLogin={() => setCurrentScreen('login')}
+                    userType={userType}
+                    onBack={() => setCurrentScreen('userTypeSelection')}
+                  />
+                )}
 
-          {currentScreen === 'forgotPassword' && (
-            <ForgotPassword
-              onBack={() => setCurrentScreen('login')}
-            />
-          )}
+                {currentScreen === 'forgotPassword' && (
+                  <ForgotPassword
+                    onBack={() => setCurrentScreen('login')}
+                  />
+                )}
 
-          {currentScreen === 'welcome' && (
-            <Welcome
-              onComplete={() => {
-                // Navigate to correct home based on user type
-                if (userType === 'expert') {
-                  setCurrentScreen('expertDashboard');
-                } else {
-                  setCurrentScreen('home');
-                }
-              }}
-              userName="Bạn"
-            />
-          )}
+                {currentScreen === 'welcome' && (
+                  <Welcome
+                    onComplete={() => {
+                      // Navigate to correct home based on user type
+                      if (userType === 'expert') {
+                        setCurrentScreen('expertDashboard');
+                      } else {
+                        setCurrentScreen('home');
+                      }
+                    }}
+                    userName="Bạn"
+                  />
+                )}
 
-          {isAuthenticated && (
-            <>
-              {currentScreen === 'home' && (
-                <Home
-                  hasAnalysisData={analysisData !== null}
-                  currentSavings={analysisData?.currentSavings}
-                  targetAmount={analysisData?.targetAmount}
-                  monthlySavings={monthlySavings}
-                  goalLabel={analysisData?.goalLabel}
-                  onStartAnalysis={() => setCurrentScreen('input')}
-                  onViewProgress={() => setCurrentScreen('progress')}
-                  onViewTracking={() => setCurrentScreen('tracking')}
-                  onViewForecast={() => setCurrentScreen('forecast')}
-                  onConsultExpert={() => setCurrentScreen('expertList')}
-                  onDailyCheckIn={() => setCurrentScreen('checkin')}
-                  onForum={() => setCurrentScreen('forum')}
-                  onAIChatbot={() => setCurrentScreen('aichat')}
-                  onHistory={() => setCurrentScreen('history')}
-                  onNotifications={() => setCurrentScreen('notifications')}
-                  onProfile={() => setCurrentScreen('profile')}
-                  onStatistics={() => setCurrentScreen('statistics')}
-                  onBudget={() => setCurrentScreen('budget')}
-                  onTools={() => setCurrentScreen('tools')}
-                  onSettings={() => setCurrentScreen('settings')}
-                  onExpertDashboard={userType === 'expert' ? () => setCurrentScreen('expertDashboard') : undefined}
-                  userType={userType}
-                />
+                {isAuthenticated && (
+                  <>
+                    {currentScreen === 'home' && (
+                      <Home
+                        hasAnalysisData={analysisData !== null}
+                        currentSavings={analysisData?.currentSavings}
+                        targetAmount={analysisData?.targetAmount}
+                        monthlySavings={monthlySavings}
+                        goalLabel={analysisData?.goalLabel}
+                        onStartAnalysis={() => setCurrentScreen('input')}
+                        onViewProgress={() => setCurrentScreen('progress')}
+                        onViewTracking={() => setCurrentScreen('tracking')}
+                        onViewForecast={() => setCurrentScreen('forecast')}
+                        onConsultExpert={() => setCurrentScreen('expertList')}
+                        onDailyCheckIn={() => setCurrentScreen('checkin')}
+                        onForum={() => setCurrentScreen('forum')}
+                        onAIChatbot={() => setCurrentScreen('aichat')}
+                        onHistory={() => setCurrentScreen('history')}
+                        onNotifications={() => setCurrentScreen('notifications')}
+                        onProfile={() => setCurrentScreen('profile')}
+                        onStatistics={() => setCurrentScreen('statistics')}
+                        onBudget={() => setCurrentScreen('budget')}
+                        onTools={() => setCurrentScreen('tools')}
+                        onSettings={() => setCurrentScreen('settings')}
+                        onExpertDashboard={userType === 'expert' ? () => setCurrentScreen('expertDashboard') : undefined}
+                        userType={userType}
+                      />
+                    )}
+
+                    {currentScreen === 'input' && (
+                      <FinancialAnalysis
+                        onAnalysisComplete={handleAnalysisComplete}
+                        onAIConsult={() => setCurrentScreen('consulting')}
+                        onBack={() => setCurrentScreen('home')}
+                      />
+                    )}
+
+                    {currentScreen === 'result' && analysisData && (
+                      <AnalysisResult
+                        monthlyIncome={analysisData.monthlyIncome}
+                        monthlyExpense={analysisData.monthlyExpense}
+                        currentSavings={analysisData.currentSavings}
+                        currentDebt={analysisData.currentDebt}
+                        debtInterestRate={analysisData.debtInterestRate}
+                        goalType={analysisData.goalType}
+                        goalLabel={analysisData.goalLabel}
+                        targetAmount={analysisData.targetAmount}
+                        interestRate={analysisData.interestRate}
+                        timeYears={analysisData.timeYears}
+                        riskProfile={analysisData.riskProfile}
+                        riskScore={analysisData.riskScore}
+                        onViewProgress={() => setCurrentScreen('progress')}
+                        onBack={() => setCurrentScreen('input')}
+                      />
+                    )}
+
+                    {currentScreen === 'progress' && analysisData && (
+                      <InvestmentProgress
+                        goalLabel={analysisData.goalLabel}
+                        targetAmount={analysisData.targetAmount}
+                        currentSavings={analysisData.currentSavings}
+                        monthlySavings={monthlySavings}
+                        interestRate={analysisData.interestRate}
+                        onStartTracking={() => setCurrentScreen('tracking')}
+                        onEditGoal={() => setCurrentScreen('input')}
+                        onBack={() => setCurrentScreen('result')}
+                      />
+                    )}
+
+                    {currentScreen === 'tracking' && analysisData && (
+                      <MonthlyTracking
+                        goalLabel={analysisData.goalLabel}
+                        targetAmount={analysisData.targetAmount}
+                        currentSavings={analysisData.currentSavings}
+                        monthlySavings={monthlySavings}
+                        onUpdateIncomeExpense={() => setCurrentScreen('update')}
+                        onViewForecast={() => setCurrentScreen('forecast')}
+                        onBack={() => setCurrentScreen('progress')}
+                      />
+                    )}
+
+                    {currentScreen === 'update' && analysisData && (
+                      <UpdateIncomeExpense
+                        previousIncome={analysisData.monthlyIncome}
+                        previousExpense={analysisData.monthlyExpense}
+                        onSave={handleUpdateIncome}
+                        onBack={() => setCurrentScreen('tracking')}
+                      />
+                    )}
+
+                    {currentScreen === 'forecast' && analysisData && (
+                      <FutureForecast
+                        goalLabel={analysisData.goalLabel}
+                        targetAmount={analysisData.targetAmount}
+                        currentSavings={analysisData.currentSavings}
+                        currentMonthlySavings={monthlySavings}
+                        onApplyScenario={handleApplyScenario}
+                        onConsultExpert={() => setCurrentScreen('expertList')}
+                        onBack={() => setCurrentScreen('tracking')}
+                        onBackHome={() => setCurrentScreen('home')}
+                      />
+                    )}
+
+                    {currentScreen === 'consulting' && (
+                      <ConsultingSupport
+                        goal={mockGoal}
+                        monthlyIncome={analysisData?.monthlyIncome || 0}
+                        onComplete={() => setCurrentScreen('tracking')}
+                      />
+                    )}
+
+                    {currentScreen === 'expertList' && (
+                      <ExpertConsulting
+                        onBookExpert={() => setCurrentScreen('bookExpert')}
+                        onBack={() => setCurrentScreen('home')}
+                      />
+                    )}
+
+                    {currentScreen === 'bookExpert' && (
+                      <BookExpert
+                        onConfirm={() => setCurrentScreen('bookingConfirm')}
+                        onBack={() => setCurrentScreen('expertList')}
+                      />
+                    )}
+
+                    {currentScreen === 'bookingConfirm' && (
+                      <BookingConfirmation
+                        onBackHome={() => setCurrentScreen('home')}
+                      />
+                    )}
+
+                    {currentScreen === 'checkin' && (
+                      <DailyCheckIn onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'forum' && (
+                      <Forum
+                        onBackHome={() => setCurrentScreen('home')}
+                        onViewThread={(forumId, threadId) => {
+                          setSelectedForumId(forumId);
+                          setSelectedThreadId(threadId);
+                          setCurrentScreen('threadDetail');
+                        }}
+                        onCreatePost={(forumId) => {
+                          setSelectedForumId(forumId);
+                          setCurrentScreen('createPost');
+                        }}
+                      />
+                    )}
+
+                    {currentScreen === 'createPost' && selectedForumId && (
+                      <CreatePost
+                        onBack={() => setCurrentScreen('forum')}
+                        forumId={selectedForumId}
+                        forumName={forumMetadata[selectedForumId]?.name || ''}
+                        forumColor={forumMetadata[selectedForumId]?.color || ''}
+                      />
+                    )}
+
+                    {currentScreen === 'threadDetail' && selectedForumId && selectedThreadId && (
+                      <ThreadDetail
+                        onBack={() => setCurrentScreen('forum')}
+                        threadId={selectedThreadId}
+                        forumName={forumMetadata[selectedForumId]?.name || ''}
+                        forumColor={forumMetadata[selectedForumId]?.color || ''}
+                      />
+                    )}
+
+                    {currentScreen === 'aichat' && (
+                      <AIChatbot onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'history' && (
+                      <History
+                        onBackHome={() => setCurrentScreen('home')}
+                        onViewDetail={(consultationId) => {
+                          console.log('View consultation detail:', consultationId);
+                        }}
+                      />
+                    )}
+
+                    {currentScreen === 'notifications' && (
+                      <Notifications onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'profile' && (
+                      <Profile 
+                        onBackHome={() => setCurrentScreen('home')} 
+                        onSettings={() => setCurrentScreen('settings')}
+                      />
+                    )}
+
+                    {currentScreen === 'statistics' && (
+                      <Statistics onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'budget' && (
+                      <BudgetManager onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'settings' && (
+                      <Settings 
+                        onBackHome={() => setCurrentScreen('home')}
+                        onBack={() => setCurrentScreen('profile')}
+                        onPersonalInfo={() => setCurrentScreen('personalInfo')}
+                        onChangePassword={() => setCurrentScreen('changePassword')}
+                        onHelpCenter={() => setCurrentScreen('helpCenter')}
+                        onContactSupport={() => setCurrentScreen('contactSupport')}
+                        onTermsOfService={() => setCurrentScreen('termsOfService')}
+                        onPrivacyPolicy={() => setCurrentScreen('privacyPolicy')}
+                        onLogout={handleLogout}
+                      />
+                    )}
+
+                    {currentScreen === 'tools' && (
+                      <FinancialTools onBackHome={() => setCurrentScreen('home')} />
+                    )}
+
+                    {currentScreen === 'personalInfo' && (
+                      <PersonalInfo onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'changePassword' && (
+                      <ChangePassword onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'helpCenter' && (
+                      <HelpCenter onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'contactSupport' && (
+                      <ContactSupport onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'termsOfService' && (
+                      <TermsOfService onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'privacyPolicy' && (
+                      <PrivacyPolicy onBack={() => setCurrentScreen('settings')} />
+                    )}
+
+                    {currentScreen === 'expertHome' && (
+                      <ExpertHome 
+                        onViewTotalEarnings={() => setCurrentScreen('expertEarnings')}
+                        onViewMonthlyEarnings={() => setCurrentScreen('expertMonthlyEarnings')}
+                        onViewClients={() => setCurrentScreen('expertClients')}
+                        onViewSessions={() => setCurrentScreen('expertSchedule')}
+                        onViewProfile={() => setCurrentScreen('expertProfile')}
+                      />
+                    )}
+
+                    {currentScreen === 'expertProfile' && (
+                      <ExpertProfile 
+                        onBack={() => setCurrentScreen('expertHome')}
+                        onSettings={() => setCurrentScreen('settings')}
+                        onLogout={handleLogout}
+                      />
+                    )}
+
+                    {currentScreen === 'expertDashboard' && (
+                      <ExpertDashboard 
+                        onBack={() => setCurrentScreen('home')}
+                        onViewClients={() => setCurrentScreen('expertClients')}
+                        onViewSchedule={() => setCurrentScreen('expertSchedule')}
+                        onViewEarnings={() => setCurrentScreen('expertEarnings')}
+                        onViewProfile={() => setCurrentScreen('profile')}
+                      />
+                    )}
+
+                    {currentScreen === 'expertClients' && (
+                      <ExpertClients 
+                        onBack={() => setCurrentScreen('expertDashboard')}
+                        onViewClient={(clientId) => {
+                          console.log('View client:', clientId);
+                        }}
+                      />
+                    )}
+
+                    {currentScreen === 'expertSchedule' && (
+                      <ExpertSchedule 
+                        onBack={() => setCurrentScreen('expertDashboard')}
+                      />
+                    )}
+
+                    {currentScreen === 'expertEarnings' && (
+                      <ExpertEarnings 
+                        onBack={() => setCurrentScreen('expertDashboard')}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+              
+              {/* Bottom Navigation - Only show when authenticated */}
+              {isAuthenticated && (
+                <>
+                  {userType === 'expert' ? (
+                    <BottomNavigationExpert
+                      currentScreen={currentScreen}
+                      setCurrentScreen={setCurrentScreen as any}
+                    />
+                  ) : (
+                    <BottomNavigation
+                      currentScreen={currentScreen}
+                      setCurrentScreen={setCurrentScreen}
+                    />
+                  )}
+                </>
               )}
-
-              {currentScreen === 'input' && (
-                <FinancialAnalysis
-                  onAnalysisComplete={handleAnalysisComplete}
-                  onAIConsult={() => setCurrentScreen('consulting')}
-                  onBack={() => setCurrentScreen('home')}
-                />
-              )}
-
-              {currentScreen === 'result' && analysisData && (
-                <AnalysisResult
-                  monthlyIncome={analysisData.monthlyIncome}
-                  monthlyExpense={analysisData.monthlyExpense}
-                  currentSavings={analysisData.currentSavings}
-                  currentDebt={analysisData.currentDebt}
-                  debtInterestRate={analysisData.debtInterestRate}
-                  goalType={analysisData.goalType}
-                  goalLabel={analysisData.goalLabel}
-                  targetAmount={analysisData.targetAmount}
-                  interestRate={analysisData.interestRate}
-                  timeYears={analysisData.timeYears}
-                  riskProfile={analysisData.riskProfile}
-                  riskScore={analysisData.riskScore}
-                  onViewProgress={() => setCurrentScreen('progress')}
-                  onBack={() => setCurrentScreen('input')}
-                />
-              )}
-
-              {currentScreen === 'progress' && analysisData && (
-                <InvestmentProgress
-                  goalLabel={analysisData.goalLabel}
-                  targetAmount={analysisData.targetAmount}
-                  currentSavings={analysisData.currentSavings}
-                  monthlySavings={monthlySavings}
-                  interestRate={analysisData.interestRate}
-                  onStartTracking={() => setCurrentScreen('tracking')}
-                  onEditGoal={() => setCurrentScreen('input')}
-                  onBack={() => setCurrentScreen('result')}
-                />
-              )}
-
-              {currentScreen === 'tracking' && analysisData && (
-                <MonthlyTracking
-                  goalLabel={analysisData.goalLabel}
-                  targetAmount={analysisData.targetAmount}
-                  currentSavings={analysisData.currentSavings}
-                  monthlySavings={monthlySavings}
-                  onUpdateIncomeExpense={() => setCurrentScreen('update')}
-                  onViewForecast={() => setCurrentScreen('forecast')}
-                  onBack={() => setCurrentScreen('progress')}
-                />
-              )}
-
-              {currentScreen === 'update' && analysisData && (
-                <UpdateIncomeExpense
-                  previousIncome={analysisData.monthlyIncome}
-                  previousExpense={analysisData.monthlyExpense}
-                  onSave={handleUpdateIncome}
-                  onBack={() => setCurrentScreen('tracking')}
-                />
-              )}
-
-              {currentScreen === 'forecast' && analysisData && (
-                <FutureForecast
-                  goalLabel={analysisData.goalLabel}
-                  targetAmount={analysisData.targetAmount}
-                  currentSavings={analysisData.currentSavings}
-                  currentMonthlySavings={monthlySavings}
-                  onApplyScenario={handleApplyScenario}
-                  onConsultExpert={() => setCurrentScreen('expertList')}
-                  onBack={() => setCurrentScreen('tracking')}
-                  onBackHome={() => setCurrentScreen('home')}
-                />
-              )}
-
-              {currentScreen === 'consulting' && (
-                <ConsultingSupport
-                  goal={mockGoal}
-                  monthlyIncome={analysisData?.monthlyIncome || 0}
-                  onComplete={() => setCurrentScreen('tracking')}
-                />
-              )}
-
-              {currentScreen === 'expertList' && (
-                <ExpertConsulting
-                  onBookExpert={() => setCurrentScreen('bookExpert')}
-                  onBack={() => setCurrentScreen('home')}
-                />
-              )}
-
-              {currentScreen === 'bookExpert' && (
-                <BookExpert
-                  onConfirm={() => setCurrentScreen('bookingConfirm')}
-                  onBack={() => setCurrentScreen('expertList')}
-                />
-              )}
-
-              {currentScreen === 'bookingConfirm' && bookingData && (
-                <BookingConfirmation
-                  expertName={bookingData.expertName}
-                  date={bookingData.date}
-                  time={bookingData.time}
-                  onBackToHome={() => setCurrentScreen('home')}
-                />
-              )}
-
-              {currentScreen === 'checkin' && (
-                <DailyCheckIn onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'forum' && (
-                <Forum
-                  onBackHome={() => setCurrentScreen('home')}
-                  onViewThread={(forumId, threadId) => {
-                    setSelectedForumId(forumId);
-                    setSelectedThreadId(threadId);
-                    setCurrentScreen('threadDetail');
-                  }}
-                  onCreatePost={(forumId) => {
-                    setSelectedForumId(forumId);
-                    setCurrentScreen('createPost');
-                  }}
-                />
-              )}
-
-              {currentScreen === 'createPost' && selectedForumId && (
-                <CreatePost
-                  onBack={() => setCurrentScreen('forum')}
-                  forumId={selectedForumId}
-                  forumName={forumMetadata[selectedForumId]?.name || ''}
-                  forumColor={forumMetadata[selectedForumId]?.color || ''}
-                />
-              )}
-
-              {currentScreen === 'threadDetail' && selectedForumId && selectedThreadId && (
-                <ThreadDetail
-                  onBack={() => setCurrentScreen('forum')}
-                  threadId={selectedThreadId}
-                  forumName={forumMetadata[selectedForumId]?.name || ''}
-                  forumColor={forumMetadata[selectedForumId]?.color || ''}
-                />
-              )}
-
-              {currentScreen === 'aichat' && (
-                <AIChatbot onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'history' && (
-                <History
-                  onBackHome={() => setCurrentScreen('home')}
-                  onViewDetail={(consultationId) => {
-                    console.log('View consultation detail:', consultationId);
-                  }}
-                />
-              )}
-
-              {currentScreen === 'notifications' && (
-                <Notifications onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'profile' && (
-                <Profile 
-                  onBackHome={() => setCurrentScreen('home')} 
-                  onSettings={() => setCurrentScreen('settings')}
-                />
-              )}
-
-              {currentScreen === 'statistics' && (
-                <Statistics onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'budget' && (
-                <BudgetManager onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'settings' && (
-                <Settings 
-                  onBackHome={() => setCurrentScreen('home')}
-                  onBack={() => setCurrentScreen('profile')}
-                  onPersonalInfo={() => setCurrentScreen('personalInfo')}
-                  onChangePassword={() => setCurrentScreen('changePassword')}
-                  onHelpCenter={() => setCurrentScreen('helpCenter')}
-                  onContactSupport={() => setCurrentScreen('contactSupport')}
-                  onTermsOfService={() => setCurrentScreen('termsOfService')}
-                  onPrivacyPolicy={() => setCurrentScreen('privacyPolicy')}
-                  onLogout={handleLogout}
-                />
-              )}
-
-              {currentScreen === 'tools' && (
-                <FinancialTools onBackHome={() => setCurrentScreen('home')} />
-              )}
-
-              {currentScreen === 'personalInfo' && (
-                <PersonalInfo onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'changePassword' && (
-                <ChangePassword onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'helpCenter' && (
-                <HelpCenter onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'contactSupport' && (
-                <ContactSupport onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'termsOfService' && (
-                <TermsOfService onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'privacyPolicy' && (
-                <PrivacyPolicy onBack={() => setCurrentScreen('settings')} />
-              )}
-
-              {currentScreen === 'expertHome' && (
-                <ExpertHome 
-                  onViewTotalEarnings={() => setCurrentScreen('expertEarnings')}
-                  onViewMonthlyEarnings={() => setCurrentScreen('expertMonthlyEarnings')}
-                  onViewClients={() => setCurrentScreen('expertClients')}
-                  onViewSessions={() => setCurrentScreen('expertSchedule')}
-                  onViewProfile={() => setCurrentScreen('expertProfile')}
-                />
-              )}
-
-              {currentScreen === 'expertProfile' && (
-                <ExpertProfile 
-                  onBack={() => setCurrentScreen('expertHome')}
-                  onSettings={() => setCurrentScreen('settings')}
-                  onLogout={handleLogout}
-                />
-              )}
-
-              {currentScreen === 'expertDashboard' && (
-                <ExpertDashboard 
-                  onBack={() => setCurrentScreen('home')}
-                  onViewClients={() => setCurrentScreen('expertClients')}
-                  onViewSchedule={() => setCurrentScreen('expertSchedule')}
-                  onViewEarnings={() => setCurrentScreen('expertEarnings')}
-                  onViewProfile={() => setCurrentScreen('profile')}
-                />
-              )}
-
-              {currentScreen === 'expertClients' && (
-                <ExpertClients 
-                  onBack={() => setCurrentScreen('expertDashboard')}
-                  onViewClient={(clientId) => {
-                    console.log('View client:', clientId);
-                  }}
-                />
-              )}
-
-              {currentScreen === 'expertSchedule' && (
-                <ExpertSchedule 
-                  onBack={() => setCurrentScreen('expertDashboard')}
-                />
-              )}
-
-              {currentScreen === 'expertEarnings' && (
-                <ExpertEarnings 
-                  onBack={() => setCurrentScreen('expertDashboard')}
-                />
-              )}
-            </>
-          )}
+            </div>
+          </div>
         </div>
-        
-        {/* Bottom Navigation - Only show when authenticated */}
-        {isAuthenticated && (
-          <>
-            {userType === 'expert' ? (
-              <BottomNavigationExpert
-                currentScreen={currentScreen}
-                setCurrentScreen={setCurrentScreen as any}
-              />
-            ) : (
-              <BottomNavigation
-                currentScreen={currentScreen}
-                setCurrentScreen={setCurrentScreen}
-              />
-            )}
-          </>
-        )}
       </div>
     </div>
   );

@@ -63,8 +63,8 @@ export default function BottomNavigation({ currentScreen, setCurrentScreen }: Bo
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-bottom z-50">
-      <div className="max-w-[393px] mx-auto">
+    <div className="relative bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 safe-area-bottom z-50">
+      <div className="w-full">
         <div className="grid grid-cols-5 h-16">
           {tabs.map((tab) => {
             const Icon = tab.icon;

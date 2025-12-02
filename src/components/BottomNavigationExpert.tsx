@@ -52,8 +52,8 @@ export default function BottomNavigationExpert({
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
-      <div className="max-w-[393px] mx-auto">
+    <div className="relative bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 shadow-lg z-50">
+      <div className="w-full">
         <div className="flex items-center justify-around px-2 py-2">
           {navItems.map((item) => {
             const Icon = item.icon;

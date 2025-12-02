@@ -199,3 +199,23 @@
 html {
   font-size: var(--font-size);
 }
+
+/* Safe Area for Mobile */
+@layer utilities {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-x-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-y-auto,
+.overflow-x-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  scroll-behavior: smooth;
+}
